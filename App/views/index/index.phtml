@@ -1,0 +1,8 @@
+Resultado da view da index.phtml
+<br />
+
+<h4>Artigos</h4>
+
+<? foreach ($this->view->objetos as $artigo) : ?>
+<?= $artigo['nome'] ?><br />
+<? endforeach; ?>
