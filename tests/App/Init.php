@@ -7,5 +7,3 @@ $classLoader->register();
 
 $classLoader = new SplClassLoader('App', '../');
 $classLoader->register();
-
-$bootstrap = new \App\Init;

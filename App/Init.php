@@ -7,8 +7,8 @@ use SON\Init\Bootstrap;
 class Init extends Bootstrap
 {
 	protected function _initRoutes() {
-		$ar['xpto'] = ['route' => '/xpto', 'controller' => 'xpto', 'action' => 'index'];
-		$ar['home'] = ['route' => '/', 'controller' => 'index', 'action' => 'index'];	
+		$ar['artigo-home'] = ['route' => '/artigos', 'controller' => 'index', 'action' => 'index'];	
+		$ar['artigo_adicionar'] = ['route' => '/artigo/adicionar', 'controller' => 'index', 'action' => 'adicionar'];	
 		return $this->setRoutes($ar);
 	}
 }

@@ -1,33 +1,45 @@
 <?php
 
 namespace SON\Db;
+
 use SON\Di\Container;
 
 abstract class Table
 {
 	protected $db;
 
-	public function __construct($db) {
+	public function __construct(\PDO $db) {
 		$this->db = $db;
 	}
 
-	public function fetchAll() {
-		$query = "Select * From " . $this->table;
-		return $this->db->query($query);
-	}
+	abstract protected function _insert(array $data);
 
-	abstract public function _insert (array $data);
-	abstract public function _update (array $data);
+	abstract protected function _update(array $data);
 
-	public function save (array $data) {
-		if (isset($data['id']))
-			$this->_update($data);
+	public function save(array $data) {
+		if (!isset($data['id']))
+			return $this->_insert($data);
 		else
-			$this->_insert($data);
+			return $this->_update($data);
 	}
 
-	public function delete ($id) {
-		$query = "DELETE FROM " . $this->table . "WHERE id = " . (int) $id;
-		return $this->db->query($query);
+	public function find($id) {
+		$stmt = $this->db->prepare("SELECT * FROM ".$this->table." WHERE id = :id");
+		$stmt->bindParam(":id", $id);
+		$stmt->execute();
+		return $stmt->fetch();
+	}
+
+	public function delete($id) {
+		$stmt = $this->db->prepare("DELETE FROM ".$this->table." WHERE id = :id");
+		$stmt->bindParam(":id", $id);
+		return $stmt->execute();
+		return true;
+	}
+
+	public function fetchAll() {
+		$stmt = $this->db->prepare("SELECT * FROM ".$this->table);
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 }
