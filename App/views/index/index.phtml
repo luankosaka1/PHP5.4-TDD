@@ -1,8 +1,35 @@
-Resultado da view da index.phtml
+<h2>Artigos</h2>
+
+<a href="./artigos/novo" class="btn pull-right btn-primary" id="adicionar">Adicionar</a>
+<br />
+<br />
 <br />
 
-<h4>Artigos</h4>
-
-<? foreach ($this->view->objetos as $artigo) : ?>
-<?= $artigo['nome'] ?><br />
-<? endforeach; ?>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th width="155">Ação</th>
+        </tr>
+    </thead>
+    <tbody>    
+        <?php foreach ($this->view->objetos as $artigo) : ?>
+            <tr>
+                <td><?= $artigo['id'] ?></td>
+                <td><?= $artigo['nome'] ?></td>
+                <td><?= $artigo['descricao'] ?></td>
+                <td>
+                    <a href="./artigos/edit?id=<?= $artigo['id'] ?>" class="btn btn-small">
+                        <span class="icon-pencil"></span> Editar
+                    </a>
+                    &nbsp;
+                    <a href="./artigos/delete?id=<?= $artigo['id'] ?>" class="btn btn-small btn-danger">
+                        <span class="icon-white icon-trash"></span> Apagar
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
